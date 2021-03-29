@@ -9,5 +9,3 @@ export const polkadotEndpoints = [
     '/blocks/4092619', //v28
     '/blocks/4392619'  //v29
 ];
-
-//953435
