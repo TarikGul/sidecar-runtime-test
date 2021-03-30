@@ -1,7 +1,8 @@
 import http from "http";
+
 import { endpoints } from "./endpoints";
 
-const polkadotEndpoints = endpoints['polkadot'];
+const polkadotEndpoints = endpoints["polkadot"];
 
 function request(path: string, hostname: string, port: number) {
   return new Promise((resolve) => {
