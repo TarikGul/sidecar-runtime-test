@@ -1,29 +1,37 @@
-import http from "http";
-
+import { PORT, URL_PATH } from "./consts";
 import { endpoints } from "./endpoints";
+import { request } from "./request";
+import { retrieveChainSpec } from "./retrieveChainSpec";
+import { ChainSpec, isSome, Option } from "./types";
 
-const polkadotEndpoints = endpoints["polkadot"];
+describe("Runtime Tests", () => {
+  let chain: Option<ChainSpec>;
+  let chainEndpoints: Option<string[]>;
 
-function request(path: string, hostname: string, port: number) {
-  return new Promise((resolve) => {
-    http.get({ path, hostname, port }, (response) => {
-      let data = "";
-      response.on("data", (_data) => (data += _data));
-      response.on("end", () => resolve(data));
-    });
+  beforeAll(async () => {
+    chain = await retrieveChainSpec();
+
+    if (isSome(chain)) {
+      chainEndpoints = endpoints[chain];
+    }
   });
-}
 
-describe("Runtime Tests for blocks", () => {
-  for (let i = 0; i < polkadotEndpoints.length; i++) {
-    const blockPath = polkadotEndpoints[i];
-    const blockHeight = polkadotEndpoints[i].split("/")[2];
+  describe("Run Endpoints", () => {
+    if (isSome(chainEndpoints)) {
+      for (let i = 0; i < chainEndpoints.length; i++) {
+        const blockPath = chainEndpoints[i];
+        const blockHeight = chainEndpoints[i].split("/")[2];
 
-    it("should return a successfull request", async () => {
-      const res = await request(blockPath, `127.0.0.1`, 8080);
-      const responseJson = JSON.parse(res as string);
+        it(`should return a successfull request for block ${blockHeight}`, async () => {
+          const res = await request(blockPath, URL_PATH, PORT);
+          const responseJson = JSON.parse(res);
 
-      expect(responseJson["number"]).toBe(blockHeight);
-    });
-  }
+          expect(responseJson["number"]).toBe(blockHeight);
+        });
+      }
+    } else {
+      console.log("Chain spec not detacted. Aborting test suite.");
+      process.exit(0);
+    }
+  });
 });
