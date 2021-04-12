@@ -1,18 +1,10 @@
-import http from "http";
-
+import { PORT, URL_PATH } from "./consts";
 import { endpoints } from "./endpoints";
+import { request } from "./request";
+import { retrieveChainSpec } from "./retrieveChainSpec";
+import { ChainSpec, isSome, Option } from "./types";
 
-const polkadotEndpoints = endpoints["polkadot"];
-
-function request(path: string, hostname: string, port: number) {
-  return new Promise((resolve) => {
-    http.get({ path, hostname, port }, (response) => {
-      let data = "";
-      response.on("data", (_data) => (data += _data));
-      response.on("end", () => resolve(data));
-    });
-  });
-}
+const polkadotEndpoints = endpoints['polkadot'];
 
 describe('Runtime Tests for blocks', () => {
   for (let i = 0; i < polkadotEndpoints.length; i++) {
