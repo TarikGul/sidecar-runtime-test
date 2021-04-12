@@ -8,6 +8,7 @@ describe("Runtime Tests", () => {
   let chain: Option<ChainSpec>;
   let chainEndpoints: Option<string[]>;
 
+  // FIX THIS
   beforeAll(async () => {
     chain = await retrieveChainSpec();
 
@@ -30,8 +31,8 @@ describe("Runtime Tests", () => {
         });
       }
     } else {
+      // ADD A PROCESS EXIT
       console.log("Chain spec not detacted. Aborting test suite.");
-      process.exit(0);
     }
   });
 });
