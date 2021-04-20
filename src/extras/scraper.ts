@@ -1,4 +1,4 @@
-import { request } from "./request";
+import { request } from "../request";
 
 const sendRequests = async () => {
   let blockHeight = 4988200;
@@ -10,7 +10,7 @@ const sendRequests = async () => {
 
     const blockPath = `/blocks/${blockHeight}`;
     const res = await request(blockPath, `127.0.0.1`, 8080);
-    const responseJson = JSON.parse(res as string);
+    const responseJson = JSON.parse(res);
 
     if (responseJson["number"]) {
       console.log(`Block ${blockHeight} was a success`);

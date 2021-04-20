@@ -1,22 +1,25 @@
 import { PORT, URL_PATH } from "./consts";
 import { endpoints } from "./endpoints";
 import { request } from "./request";
-import { retrieveChainSpec } from "./retrieveChainSpec";
-import { ChainSpec, isSome, Option } from "./types";
+import { ChainSpec } from "./types";
 
-const polkadotEndpoints = endpoints['polkadot'];
+// @ts-ignore
+const config = JSON.parse(process.env.__CONFIGURATION);
+const chain = config.chain as ChainSpec;
 
-describe('Runtime Tests for blocks', () => {
-  for (let i = 0; i < polkadotEndpoints.length; i++) {
-    const blockPath = polkadotEndpoints[i];
-    const blockHeight = polkadotEndpoints[i].split('/')[2];
+const polkadotEndpoints: string[][] = endpoints[chain];
 
-    it(`should return a successfull request for block: ${blockHeight}`, async () => {
-      jest.setTimeout(15000)
-      const res = await request(blockPath, `127.0.0.1`, 8080);
-      const responseJson = JSON.parse(res as string);
+describe("Runtime Tests for blocks", () => {
+  jest.setTimeout(15000);
 
-      expect(responseJson['number']).toBe(blockHeight);
-    });
-  }
+  test.each(polkadotEndpoints)(
+    "Given path %p, it should return block height %p",
+    async (blockPath) => {
+      const blockHeight = blockPath.split("/")[2];
+      const res = await request(blockPath, URL_PATH, PORT);
+      const responseJson = JSON.parse(res);
+
+      expect(responseJson["number"]).toBe(blockHeight);
+    }
+  );
 });

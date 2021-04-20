@@ -14,12 +14,11 @@ import signal
 2. Call yarn dev under a subprocess like below. 
 '''
 def call_sidecar_instance(chain_addr: str):
-    to_be_exported = 'SAS_SUBSTRATE_WS_URL={}'.format(chain_addr)
 
-    subprocess.call(['export ', to_be_exported])
-    process = subprocess.run(['substrate-api-sidecar'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    os.environ['SAS_SUBSTRATE_WS_URL'] = chain_addr
+    process = subprocess.run(['substrate-api-sidecar'])
 
-    print(to_be_exported)
+    
     print("process PID: {}".format(process.pid))
     
     return process.pid
@@ -29,7 +28,7 @@ This is a local test,
 ie: `cd ../ && yarn test`
 '''
 def call_runtime_test():
-    print('call runtime test')
+    process = subprocess.run(['yarn', 'test'])
 
 def kill_process(pid: int):
     os.kill(pid, signal.SIGTERM)
@@ -48,3 +47,4 @@ def main():
 
 if __name__ == "__main__":
     call_sidecar_instance('ws://127.0.0.1:9944')
+    call_runtime_test()

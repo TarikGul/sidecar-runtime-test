@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "lint": "tsc && eslint . --ext ts",
-    "test": "jest"
+    "test": "tsc && node build/index.js"
   },
   "keywords": [],
   "author": "",

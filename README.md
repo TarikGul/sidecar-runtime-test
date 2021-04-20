@@ -8,9 +8,10 @@ a set of tests for every possible runtime version, and store that meta data loca
 
 1. Start `substrate-api-sidecar` in dev mode. 
 
-2. `yarn jest`
+2. `yarn test --chain <chain_name(lowercase)>`
 
-## Potential Ideas
+ex: `yarn test --chain kusama`
 
-A bash script that runs sidecar for each chain (polkadot, kusama, westend), and will test specific routes against each chain using this simple script. 
+This allows you to decide which chain you want to test
+
 
