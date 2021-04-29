@@ -2,7 +2,7 @@
 
 The overall purpose of this is to give an idea of what it could possible look like to test
 a set of connections and queries to a set of blocks across runtimes, without having to write 
-a set of tests for every possible runtime version, and store that meta data locally. Every time we setup a new release its pretty standard to test the updated repo on blocks from a set of different chains. Something like this could be pretty nice to quality of life, and could help cover older blocks.  
+a set of tests for every possible runtime version, and store that metadata locally. Every time we setup a new release for Substrate-api-sidecar its pretty standard to test the updated repo on blocks from a set of different chains. 
 
 ## Getting started
 

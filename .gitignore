@@ -1,2 +1,6 @@
 /node_modules
 /build
+
+# Yarn 2.x ignores
+.yarn/*
+!.yarn/releases
