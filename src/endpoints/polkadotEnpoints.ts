@@ -8,4 +8,5 @@ export const polkadotEndpoints = [
   ["/blocks/3892620", "3892620"], //v27
   ["/blocks/4092619", "4092619"], //v28
   ["/blocks/4392619", "4392619"], //v29
+  ["/blocks/4947391", "4947391"], //v30
 ];
